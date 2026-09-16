@@ -11,8 +11,6 @@ The skill helps turn a broad initiative into:
 - a final integrated certification gate when the work warrants one; and
 - a resumable record of every live issue created.
 
-It was informed by the structure of [Bystays Epic #567](https://github.com/Bystays/bystays/issues/567), then generalized so repository-specific requirements are discovered instead of copied.
-
 ## What makes this different
 
 Markdown checklists are useful summaries, but they do not create GitHub's native hierarchy or dependency indicators. This skill uses the GitHub features that show an issue's parent, sub-issues, `blocked by`, and `blocking` relationships directly in the interface.
