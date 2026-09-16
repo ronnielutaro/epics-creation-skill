@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub Epic Creation"
+  short_description: "Create phased Epics with native dependencies"
+  default_prompt: "Use $github-epic-creation to design and validate a phased GitHub Epic with native sub-issues and blocked-by relationships."

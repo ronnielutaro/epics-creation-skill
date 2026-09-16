@@ -1,0 +1,141 @@
+{
+  "key": "checkout-reliability",
+  "repository": "acme/storefront",
+  "defaults": {
+    "labels": ["mvp-critical"],
+    "assignees": ["@me"]
+  },
+  "epic": {
+    "title": "Epic: Checkout Reliability and Release Safety",
+    "objective": "Make checkout complete exactly once or fail visibly without corrupting financial state.",
+    "primary_invariant": "Every accepted checkout has one authoritative order and one reconcilable payment outcome.",
+    "context": [
+      "Current retries can create ambiguous payment outcomes."
+    ],
+    "decisions": [
+      {
+        "title": "Financial authority",
+        "points": [
+          "The ledger and provider reconciliation record are authoritative; UI state is not."
+        ]
+      }
+    ],
+    "in_scope": [
+      "Checkout orchestration",
+      "Payment reconciliation"
+    ],
+    "out_of_scope": [
+      "Unrelated catalog redesign"
+    ],
+    "labels": [
+      "Epic"
+    ],
+    "delivery_rules": [
+      "One focused pull request per child unless explicitly approved."
+    ],
+    "verification_doctrine": [
+      "Use controlled provider fixtures and database oracles."
+    ],
+    "exit_criteria": [
+      "The final certification child passes with linked evidence."
+    ],
+    "completion_policy": "Do not close automatically after the final implementation merge; require accepted certification evidence."
+  },
+  "phases": [
+    {
+      "key": "phase-0",
+      "title": "Phase 0: Establish the contract",
+      "purpose": "Lock financial state ownership before changing orchestration.",
+      "checkpoint": [
+        "The state machine and retry semantics are approved."
+      ],
+      "issues": [
+        {
+          "key": "contract",
+          "title": "Checkout 0.1: Define authoritative payment state and retry semantics",
+          "outcome": "Create one executable contract for order and payment transitions.",
+          "problem": [
+            "Current components disagree about terminal payment states."
+          ],
+          "in_scope": [
+            "State ownership",
+            "Idempotency keys"
+          ],
+          "out_of_scope": [
+            "Provider migration"
+          ],
+          "acceptance_criteria": [
+            "Every transition has one owner and documented retry behavior."
+          ],
+          "verification": [
+            "Contract tests cover success, decline, timeout, and replay."
+          ],
+          "closure_evidence": [
+            "Link the state table and exact test results."
+          ],
+          "labels": [
+            "backend"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "phase-1",
+      "title": "Phase 1: Implement and certify",
+      "purpose": "Implement the contract, then independently exercise the integrated path.",
+      "checkpoint": [
+        "No test produces duplicate or ambiguous financial state."
+      ],
+      "issues": [
+        {
+          "key": "implementation",
+          "title": "Checkout 1.1: Make payment capture idempotent and recoverable",
+          "outcome": "Apply the approved contract to the runtime path.",
+          "in_scope": [
+            "Capture orchestration",
+            "Recovery"
+          ],
+          "out_of_scope": [
+            "New payment methods"
+          ],
+          "acceptance_criteria": [
+            "Replaying a request does not duplicate capture."
+          ],
+          "verification": [
+            "Database and provider-shaped integration tests pass."
+          ],
+          "closure_evidence": [
+            "Post database-oracle snapshots and exact commands."
+          ],
+          "blocked_by": [
+            "contract"
+          ]
+        },
+        {
+          "key": "certification",
+          "title": "Checkout 1.2: Certify the end-to-end checkout release gate",
+          "outcome": "Independently prove the complete checkout invariant.",
+          "in_scope": [
+            "Integrated happy, negative, retry, and failure paths"
+          ],
+          "out_of_scope": [
+            "Implementation refactors"
+          ],
+          "acceptance_criteria": [
+            "The complete matrix passes against authoritative state."
+          ],
+          "verification": [
+            "Exercise the real UI, API, database, and controlled provider boundary."
+          ],
+          "closure_evidence": [
+            "Attach traces, redacted requests, database evidence, and residual risks."
+          ],
+          "blocked_by": [
+            "implementation"
+          ],
+          "completion_rule": "Keep the Epic open until this evidence is independently accepted."
+        }
+      ]
+    }
+  ]
+}
