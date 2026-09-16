@@ -13,6 +13,9 @@ This repository contains the `github-epic-creation` Codex skill and its determin
 - `scripts/epic_tool.py` is the executable behavior.
 - `tests/test_epic_tool.py` covers meaningful behavioral invariants.
 - `agents/openai.yaml` must remain consistent with the skill name and purpose.
+- `docs/architecture.md` describes components, trust boundaries, and sources of truth.
+- `docs/data-flow.md` describes command paths, state transitions, and recovery.
+- `docs/decisions/` records durable architectural decisions; supersede rather than delete accepted records.
 
 Do not duplicate the same normative rule across several files unless a short user-facing summary is necessary. Put schema mechanics in `plan-format.md`, planning judgment in `epic-quality.md`, and essential invocation behavior in `SKILL.md`.
 

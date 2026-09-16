@@ -110,6 +110,7 @@ Live creation is not transactional. If GitHub accepts a mutation but the network
 .
 |-- SKILL.md                         Codex entrypoint and operating contract
 |-- agents/openai.yaml               Skill display metadata
+|-- docs/                             Architecture, data flow, and decisions
 |-- references/
 |   |-- epic-plan.example.json       Reusable plan example
 |   |-- epic-quality.md              Decomposition and evidence guidance
@@ -141,6 +142,8 @@ python "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_valid
 ## Design guidance
 
 Read [Epic decomposition and evidence](references/epic-quality.md) before publishing a cross-layer or release-critical initiative. The central rule is simple: phases communicate risk retirement, while native dependency edges encode prerequisites that truly block safe completion.
+
+For the implementation design, see the [documentation index](docs/README.md), [system architecture](docs/architecture.md), and [data-flow design](docs/data-flow.md).
 
 GitHub references:
 
